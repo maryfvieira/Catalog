@@ -1,0 +1,14 @@
+name: Events Demo1
+on:
+  pull_request:
+    types: 
+      - opened
+      - edited
+      - closed
+  workflow_dispatch:
+jobs:
+  output-info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Request Event Info
+        run: echo "${{ toJSON(github.event) }}"
