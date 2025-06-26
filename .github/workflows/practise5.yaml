@@ -36,15 +36,16 @@ jobs:
         run: npm ci
       - name: Build the project
         run: npm run build
-      - name: Publish js file name
-        id: publish
-        run: find dist/assets/*.js -type f -execdir echo "script-file={}" \; >> "$GITHUB_OUTPUT"
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: dist-files
           path: dist
-            
+      - name: Publish js file name
+        id: publish
+        run: |
+            FILE=$(find dist/assets/*.js -type f | head -n 1)
+            echo "script-file=$FILE" >> "$GITHUB_OUTPUT"
   deploy:
     needs: build
     runs-on: ubuntu-latest
