@@ -37,8 +37,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
-          path: |
-            dist
+          path: dist
+            
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -48,7 +48,9 @@ jobs:
         with:
           name: build-artifacts
       - name: Output contents
-        run: ls -la dist
+        run: |
+          echo "Contents of the dist directory:"
+          ls -la dist
       - name: Deploy to production
         run: echo "Deploying to production..."
 
