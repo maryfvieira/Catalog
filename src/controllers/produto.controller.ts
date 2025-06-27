@@ -14,7 +14,6 @@ export class ProdutoController {
     if (!produto) {
       return res.status(404).json({ mensagem: "Produto não encontrado" });
     }
-    
     return res.json(produto);
   }
 
