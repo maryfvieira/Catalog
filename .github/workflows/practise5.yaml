@@ -44,7 +44,7 @@ jobs:
       - name: Publish js file name
         id: publish
         run: |
-            FILE=$(find dist/assets/*.js -type f | head -n 1)
+            FILE=$(find dist/scripts/init-config.js -type f | head -n 1)
             echo "script-file=$FILE" >> "$GITHUB_OUTPUT"
   deploy:
     needs: build
