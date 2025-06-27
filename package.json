@@ -20,7 +20,7 @@
   "description": "",
   "devDependencies": {
     "@types/jest": "^30.0.0",
-    "@types/mongodb": "^4.0.6",
+    "@types/mongodb": "^4.0.7",
     "@types/node": "^24.0.1",
     "@types/pg": "^8.15.4",
     "@types/supertest": "^6.0.3",
@@ -34,6 +34,9 @@
   "dependencies": {
     "@types/express": "^4.17.23",
     "dotenv": "^16.6.0",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "mongodb": "^6.17.0",
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.10.0"
   }
 }
