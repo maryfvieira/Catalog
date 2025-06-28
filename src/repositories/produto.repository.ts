@@ -1,14 +1,15 @@
 // src/repositories/produto.repository.ts
 import { Produto } from "../interfaces/produto.interface";
 import { Db } from "mongodb"; 
+import { injectable, inject } from "tsyringe";
 
+@injectable()
 export class ProdutoRepository {
   private collectionName = "produtos";
-  private db: Db;
 
-  constructor(db: Db) {
-    this.db = db;
-  }
+  constructor(
+    @inject("MongoDB") private db: Db
+  ) {}
 
   async getAll(): Promise<Produto[]> {
     return this.db.collection<Produto>(this.collectionName).find().toArray();

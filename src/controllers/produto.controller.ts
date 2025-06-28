@@ -1,18 +1,13 @@
 // src/controllers/produto.controller.ts
 import { Request, Response } from "express";
 import { ProdutoService } from "../services/produto.service";
-import { ProdutoRepository } from "../repositories/produto.repository";
-import connectToMongo from "../database/mongo";
+import { inject, injectable } from "tsyringe";
 
+@injectable()
 export class ProdutoController {
-  private service!: ProdutoService;
-
-  constructor() {
-    connectToMongo().then(db => {
-      const repo = new ProdutoRepository(db);
-      this.service = new ProdutoService(repo);
-    });
-  }
+  constructor(
+    @inject("ProdutoService") private service: ProdutoService
+  ) {}
 
   getAll = async (req: Request, res: Response): Promise<Response> => {
     const produtos = await this.service.getAll();

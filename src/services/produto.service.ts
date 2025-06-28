@@ -1,9 +1,12 @@
 // src/services/produto.service.ts
 import { Produto } from "../interfaces/produto.interface";
 import { ProdutoRepository } from "../repositories/produto.repository";
-
+import { injectable, inject } from "tsyringe";
+@injectable()
 export class ProdutoService {
-  constructor(private repository: ProdutoRepository) {}
+  constructor(
+    @inject("ProdutoRepository") private repository: ProdutoRepository
+  ) {}
 
   async getAll(): Promise<Produto[]> {
     return this.repository.getAll();

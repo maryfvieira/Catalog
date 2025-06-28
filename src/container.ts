@@ -1,7 +1,7 @@
 import { container } from "tsyringe";
 import { ProdutoRepository } from "./repositories/produto.repository";
 import { ProdutoService } from "./services/produto.service";
-import connectToMongo from "./database/mongo";
+import { connectToMongo } from "@database/connectToMongo";
 import { Db } from "mongodb";
 
 export async function registerDependencies() {
