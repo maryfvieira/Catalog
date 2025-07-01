@@ -6,6 +6,8 @@
     "build": "tsc && tsc && tsc-alias && node src/scripts/init-config.ts",
     "start": "node dist/server.js",
     "dev": "nodemon --watch 'src/**/*' --ext ts,json --exec ts-node src/server.ts",
+    "dev-exec": "nodemon --exec \"node -r ./ts-node-register.js src/server.ts\"",
+    "dev-exec2": "nodemon --exec ts-node -r tsconfig-paths/register src/server.ts",
     "test": "jest",
     "generate-config": "ts-node src/scripts/init-config.ts"
   },
@@ -37,6 +39,7 @@
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.16",
+    "tsconfig-paths": "^4.2.0",
     "tsconfig-paths-jest": "^0.0.1",
     "typescript": "^5.8.3"
   },
