@@ -49,7 +49,7 @@ jobs:
 
       - name: Run Server
         run: npm start & npx wait-on http://127.0.0.1:$PORT
-        
+
       - name: Run tests
         env:
           NODE_ENV: test
@@ -68,4 +68,3 @@ jobs:
       - name: Output info
         run: |
           echo "MONGO_DB_TIMEOUT: ${{ env.MONGO_DB_TIMEOUT }}"
-          echo "MONGODB_DB_NAME: $MONGODB_DB_NAME"
