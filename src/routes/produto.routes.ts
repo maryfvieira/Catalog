@@ -1,13 +1,14 @@
 import { Router } from "express";
 import { ProdutoController } from "../controllers/produto.controller";
+import container from "../container";
 
 const router = Router();
-const controller = new ProdutoController();
+const controller = container.resolve(ProdutoController);
 
-router.get("/produtos", (req, res) => controller.getAll(req, res));
-router.get("/produtos/:id", (req, res) => controller.getById(req, res));
-router.post("/produtos", (req, res) => controller.create(req, res));
-router.put("/produtos/:id", (req, res) => controller.update(req, res));
-router.delete("/produtos/:id", (req, res) => controller.delete(req, res));
+router.get("/produtos", controller.getAll.bind(controller));
+router.get("/produtos/:id", controller.getById.bind(controller));
+router.post("/produtos", controller.create.bind(controller));
+router.put("/produtos/:id", controller.update.bind(controller));
+router.delete("/produtos/:id", controller.delete.bind(controller));
 
 export default router;

@@ -1,36 +1,32 @@
+// src/services/produto.service.ts
 import { Produto } from "../interfaces/produto.interface";
-
-let produtos: Produto[] = [];
-let nextId = 1;
-
+import { ProdutoRepository } from "../repositories/produto.repository";
+import { injectable, inject } from "tsyringe";
+@injectable()
 export class ProdutoService {
-  getAll(): Produto[] {
-    return produtos;
+  constructor(
+    @inject("ProdutoRepository") private repository: ProdutoRepository
+  ) {}
+
+  async getAll(): Promise<Produto[]> {
+    return this.repository.getAll();
   }
 
-  getById(id: number): Produto | undefined {
-    return produtos.find(p => p.id === id);
+  async getById(id: number): Promise<Produto | null> {
+    return this.repository.getById(id);
   }
 
-  create(produto: Omit<Produto, "id">): Produto {
-    const novoProduto: Produto = { id: nextId++, ...produto };
-    produtos.push(novoProduto);
-    return novoProduto;
+  async create(produto: Omit<Produto, "id">): Promise<Produto> {
+    const id = await this.repository.getNextId();
+    const novoProduto = { id, ...produto };
+    return this.repository.create(novoProduto);
   }
 
-  update(id: number, dados: Partial<Omit<Produto, "id">>): Produto | null {
-    const index = produtos.findIndex(p => p.id === id);
-    if (index === -1) return null;
-
-    produtos[index] = { ...produtos[index], ...dados };
-    return produtos[index];
+  async update(id: number, dados: Partial<Omit<Produto, "id">>): Promise<Produto | null> {
+    return this.repository.update(id, dados);
   }
 
-  delete(id: number): boolean {
-    const index = produtos.findIndex(p => p.id === id);
-    if (index === -1) return false;
-
-    produtos.splice(index, 1);
-    return true;
+  async delete(id: number): Promise<boolean> {
+    return this.repository.delete(id);
   }
 }
