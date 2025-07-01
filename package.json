@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc && node src/scripts/init-config.ts",
+    "build": "tsc && tsc && tsc-alias && node src/scripts/init-config.ts",
     "start": "node dist/server.js",
     "dev": "nodemon --watch 'src/**/*' --ext ts,json --exec ts-node src/server.ts",
     "test": "jest",
@@ -36,6 +36,7 @@
     "supertest": "^7.1.1",
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.16",
     "tsconfig-paths-jest": "^0.0.1",
     "typescript": "^5.8.3"
   },

@@ -5,7 +5,8 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "paths": {
-      "@database/*": ["database/*"]
+      "@database/*": ["database/*"],
+      "@modules/*": ["modules/*"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
