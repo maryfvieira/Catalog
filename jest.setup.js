@@ -1,3 +1,5 @@
-// jest.setup.js
-require('dotenv').config({ path: '.env' }); // Carrega as variáveis do .env
+const path = require('path');
+require('dotenv').config({ 
+  path: path.resolve(__dirname, '.env') 
+});
 require("reflect-metadata");
