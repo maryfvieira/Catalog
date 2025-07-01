@@ -1,11 +1,13 @@
-name: Practise5
+name: Practise6
 on:
   push:
     branches:
       - main
+
 env:
   MONGODB_PORT: 27017
   MONGO_DB_TIMEOUT: 15000
+  PORT: 8080  # Definindo a variável PORT globalmente
 
 jobs:
   test:
@@ -20,13 +22,13 @@ jobs:
           MONGO_INITDB_ROOT_PASSWORD: 123456
           MONGO_INITDB_DATABASE: curso_git
         options: >-
-          --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'" 
-          --health-interval=10s 
-          --health-timeout=15s 
+          --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'"
+          --health-interval=10s
+          --health-timeout=15s
           --health-retries=5
 
     steps:
-      - name: Get the code
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Cache dependencies
@@ -35,20 +37,27 @@ jobs:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install Node.js dependencies
+      - name: Install dependencies
         run: npm ci
 
-      - name: Build the project
-        run: npm run build
+      # Passo crítico: Resolver aliases durante o build
+      - name: Build project
+        run: |
+          npm run build
+          npx tsc-alias -v  # Resolve caminhos de aliases
 
       - name: Run Server
-        run: npm start & npx wait-on http://127.0.0.1:$PORT
+        env:
+          PORT: ${{ env.PORT }}  # Usando a variável definida
+        run: |
+          npm start &
+          npx wait-on http://127.0.0.1:$PORT
 
       - name: Run tests
         env:
@@ -58,13 +67,12 @@ jobs:
           MONGODB_USERNAME: user
           MONGODB_PASSWORD: 123456
           MONGODB_DB_NAME: curso_git
-          PORT: 8080
-        run: npm run test
+          PORT: ${{ env.PORT }}  # Garantindo consistência
+        run: npm test
 
   build:
     needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Output info
-        run: |
-          echo "MONGO_DB_TIMEOUT: ${{ env.MONGO_DB_TIMEOUT }}"
+        run: "echo MONGO_DB_TIMEOUT: $MONGO_DB_TIMEOUT"
