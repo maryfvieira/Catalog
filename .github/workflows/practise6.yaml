@@ -43,8 +43,13 @@ jobs:
 
       - name: Install Node.js dependencies
         run: npm ci
+
+      - name: Build the project
+        run: npm run build
+
       - name: Run Server
         run: npm start & npx wait-on http://127.0.0.1:$PORT
+        
       - name: Run tests
         env:
           NODE_ENV: test
