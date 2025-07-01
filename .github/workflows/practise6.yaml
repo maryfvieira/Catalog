@@ -63,4 +63,4 @@ jobs:
       - name: Output info
         run: |
           echo "MONGO_DB_TIMEOUT: ${{ env.MONGO_DB_TIMEOUT }}"
-          echo "MONGODB_DB_NAME: ${{ MONGODB_DB_NAME }}"
+          echo "MONGODB_DB_NAME: $MONGODB_DB_NAME"
